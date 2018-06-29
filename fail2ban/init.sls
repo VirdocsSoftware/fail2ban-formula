@@ -1,8 +1,12 @@
 {% from "fail2ban/map.jinja" import fail2ban with context %}
 
 fail2ban:
+  cmd.run:
+    - name: sleep 30 && sudo apt-get update
   pkg.installed:
     - name: {{ fail2ban.package }}
+    - require: 
+      - cmd: fail2ban
   service.running:
     - name: {{ fail2ban.service }}
     - enable: True
